@@ -61,3 +61,9 @@ aio/content/examples/.DS_Store
 
 # Ignore cache created with the Angular CLI.
 .angular/
+
+# Ignore environment files
+src/environments/*
+
+# Do not ignore environment.example.ts
+!src/environments/environment.example.ts
