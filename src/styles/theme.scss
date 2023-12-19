@@ -12,14 +12,13 @@ $movies-warn: mat.define-palette(mat.$red-palette);
 
 $typography-config: mat.define-typography-config();
 
-// // Define a dark theme
+// Define a dark theme
 $movies-dark-theme: mat.define-dark-theme((
  color: (
   primary: $movies-dark-primary,
   accent: $movies-dark-accent,
    warn: $movies-warn,
  ),
-  // Only include `typography` and `density` in the default dark theme.
   typography: $typography-config,
   density: 0,
 ));
