@@ -1,0 +1,27 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$movies-dark-primary: mat.define-palette(mat.$pink-palette);
+$movies-dark-accent: mat.define-palette(mat.$blue-grey-palette, A200, A100, A400);
+
+$movies-warn: mat.define-palette(mat.$red-palette);
+
+$typography-config: mat.define-typography-config();
+
+// // Define a dark theme
+$movies-dark-theme: mat.define-dark-theme((
+ color: (
+  primary: $movies-dark-primary,
+  accent: $movies-dark-accent,
+   warn: $movies-warn,
+ ),
+  // Only include `typography` and `density` in the default dark theme.
+  typography: $typography-config,
+  density: 0,
+));
+
+@include mat.all-component-themes($movies-dark-theme);
