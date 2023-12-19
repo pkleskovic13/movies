@@ -1,3 +1,6 @@
+@use 'styles/theme';
+@use '@angular/material' as mat;
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -8,4 +11,5 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: mat.get-theme-color(theme.$movies-dark-theme, background, app-bar);
 }
