@@ -1,3 +1,5 @@
-@for (movie of movieList$(); track movie.id) {
-  <app-movie-list-item [title]="movie.title"></app-movie-list-item>
-}
+<mat-list role="list">
+  @for (movie of movieList$(); track movie.id) {
+    <app-movie-list-item [title]="movie.title"></app-movie-list-item>
+  }
+</mat-list>

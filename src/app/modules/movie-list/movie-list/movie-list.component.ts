@@ -16,7 +16,10 @@ export class MovieListComponent {
     this.moviesService = inject(MoviesService);
 
     this.moviesService.getPopularMovies().pipe(takeUntilDestroyed()).subscribe((movieList) => {
-      this.movieList$.update(() => movieList)
+      this.movieList$.update(() => movieList);
+      // Workaround for the default MatSidenav behavior with dynamic content: it does not properly push the content to the side and instead
+      // just renders the sidenav over the content until the first DOM refresh
+      window.dispatchEvent(new Event('resize'));
     });
   }
 }

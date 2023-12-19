@@ -6,5 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './movie-list-item.component.scss'
 })
 export class MovieListItemComponent {
+  @Input() id?: number;
   @Input() title?: string;
 }

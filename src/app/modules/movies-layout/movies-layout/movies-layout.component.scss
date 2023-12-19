@@ -1,9 +1,8 @@
 .sidenav-container {
   display: flex;
-  height: 100%;
-  z-index: -1;
+  height: calc(100% - 64px - 3em);
 }
 
-.navbar-offset {
-  padding-top: 64px;
+.sidenav-content {
+  width: 100%;
 }

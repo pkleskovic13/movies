@@ -2,10 +2,6 @@
 @use '@angular/material' as mat;
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: 3em;
   display: flex;
   flex-direction: row;
