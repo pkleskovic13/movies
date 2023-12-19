@@ -1,1 +1,3 @@
-<p>movie-list works!</p>
+@for (movie of movieList$(); track movie.id) {
+  <app-movie-list-item [title]="movie.title"></app-movie-list-item>
+}
