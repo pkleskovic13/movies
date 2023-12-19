@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { PaginatedResponse } from "../models/api/paginated-response.model";
 import { Movie } from "../models/movie.model";
-import { environment } from "../../environments/environment.development";
+import { environment } from "../../environments/environment";
 import { Observable, map } from "rxjs";
 
 @Injectable({
@@ -11,6 +11,7 @@ import { Observable, map } from "rxjs";
 export class MoviesService {
   private httpClient: HttpClient;
 
+  // TODO: implement DRY!
   private options = {
     method: "GET",
     headers: {

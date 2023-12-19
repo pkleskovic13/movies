@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Genre } from '../../../models/genre.model';
 
 @Component({
   selector: 'app-movie-list-item',
@@ -8,4 +9,5 @@ import { Component, Input } from '@angular/core';
 export class MovieListItemComponent {
   @Input() id?: number;
   @Input() title?: string;
+  @Input() genres?: string[];
 }

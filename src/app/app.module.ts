@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './modules/core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MoviesLayoutModule } from './modules/movies-layout/movies-layout.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CamelCaseInterceptor } from './interceptors/camel-case.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     MoviesLayoutModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CamelCaseInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,5 @@
+import { Genre } from "./genre.model"
+
 export interface Movie {
   adult: boolean,
   backdropPath: string,
@@ -14,3 +16,5 @@ export interface Movie {
   voteAverage: number,
   voteCount: number
 }
+
+export type MovieWithGenres = Movie & { genres: string[] }
