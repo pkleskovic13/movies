@@ -3,7 +3,7 @@ import { Injectable, inject } from "@angular/core";
 import { PaginatedResponse } from "../models/api/paginated-response.model";
 import { Movie } from "../models/movie.model";
 import { environment } from "../../environments/environment";
-import { Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, map, of, tap } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +20,8 @@ export class MoviesService {
     },
   };
 
+  private moviesSubject$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
+
   constructor() {
     this.httpClient = inject(HttpClient);
   }
@@ -28,8 +30,22 @@ export class MoviesService {
     const response = this.httpClient.get<PaginatedResponse<Movie>>(
       `${environment.movieDatabaseApi.BASE_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
       this.options
-    ).pipe(map(response => response.results));
+    ).pipe(
+      map(response => response.results),
+      tap(response => this.moviesSubject$.next(response))
+    );
 
     return response;
+  }
+
+  getMovieById(id: number): Observable<Movie | undefined> {
+    console.log(this.moviesSubject$.getValue())
+    const movie = this.moviesSubject$.getValue().find((movie) => movie.id === id)
+    // if (movie) {
+      return of(movie);
+    // } 
+
+    // else make a network request to the API (and add to the movies array i guess?)
+    console.log('not found, make a request');
   }
 }

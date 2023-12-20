@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MoviesLayoutModule } from './modules/movies-layout/movies-layout.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CamelCaseInterceptor } from './interceptors/camel-case.interceptor';
+import { MovieDetailsModule } from './modules/movie-details/movie-details.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CamelCaseInterceptor } from './interceptors/camel-case.interceptor';
     HttpClientModule,
     CoreModule,
     MoviesLayoutModule,
+    MovieDetailsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CamelCaseInterceptor, multi: true }

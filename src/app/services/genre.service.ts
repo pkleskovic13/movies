@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { BehaviorSubject, Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, map, tap } from "rxjs";
 import { Genre } from "../models/genre.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
@@ -19,26 +19,25 @@ export class GenreService {
     },
   };
 
-  private genresSubject: BehaviorSubject<Genre[]> = new BehaviorSubject<
-    Genre[]
-  >([]);
+  private genresSubject$: BehaviorSubject<Genre[]> = new BehaviorSubject<Genre[]>([]);
 
   constructor() {
     this.httpClient = inject(HttpClient);
   }
 
   getAllMovieGenres(): Observable<Genre[]> {
-    if (this.genresSubject.getValue().length > 0) {
-      return this.genresSubject.asObservable();
+    if (this.genresSubject$.getValue().length > 0) {
+      return this.genresSubject$.asObservable();
     }
 
-    const response = this.httpClient
+    return this.httpClient
       .get<GenresResponse>(
         `${environment.movieDatabaseApi.BASE_URL}/genre/movie/list?language=en`,
         this.options
       )
-      .pipe(map((response) => response.genres));
-
-    return response;
+      .pipe(
+        map((response) => response.genres),
+        tap((genres: Genre[]) => this.genresSubject$.next(genres))
+      );
   }
 }
