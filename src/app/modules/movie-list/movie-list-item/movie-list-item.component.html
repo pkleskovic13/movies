@@ -1,6 +1,11 @@
-<mat-list-item role="listitem" class="sidenav-list-item">
-  <div>
-    <p>{{ title }}</p>
-    {{ genres?.join(', ') }}
+<mat-list-item role="listitem" class="sidenav-list-item" matRipple matRippleColor="#e91e6267" [class.selected]="isSelected">
+  <div class="movie-list-item-layout">
+    <div>
+      <mat-icon aria-hidden="false" aria-hidden="true" fontIcon="movie"></mat-icon>
+    </div>
+    <div>
+      <div>{{ title }}</div>
+      <div class="mat-caption">{{ genres?.join(", ") }}</div>
+    </div>
   </div>
 </mat-list-item>

@@ -1,5 +1,5 @@
 <mat-list role="list">
   @for (movie of movieList$(); track movie.id) {
-    <app-movie-list-item [title]="movie.title" [genres]="movie.genres"></app-movie-list-item>
+    <app-movie-list-item [title]="movie.title" [genres]="movie.genres" [isSelected]="selectedItem$() === movie.id" (click)="setSelectedItem(movie.id)"></app-movie-list-item>
   }
 </mat-list>

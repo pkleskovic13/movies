@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Genre } from '../../../models/genre.model';
 
 @Component({
@@ -10,4 +10,5 @@ export class MovieListItemComponent {
   @Input() id?: number;
   @Input() title?: string;
   @Input() genres?: string[];
+  @Input() isSelected: boolean = false;
 }

@@ -1,4 +1,25 @@
+@use 'styles/theme';
+@use '@angular/material' as mat;
+
+$bg-color: map-get(map-get(theme.$movies-dark-theme, background), background);
+$primary-color: mat.get-theme-color(theme.$movies-dark-theme, primary);
+
 .sidenav-list-item {
-  border: 1px solid red;
   height: 5em;
+  transition: background-color 0.35s ease-in-out; 
+
+  &:not(.selected):hover {
+    background-color: lighten($bg-color, 10%);
+  }
+}
+
+.movie-list-item-layout {
+  display: flex;
+  direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.selected {
+  background-color: $primary-color;
 }

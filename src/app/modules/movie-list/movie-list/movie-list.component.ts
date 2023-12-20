@@ -5,6 +5,7 @@ import { Movie, MovieWithGenres } from "../../../models/movie.model";
 import { GenreService } from "../../../services/genre.service";
 import { Genre } from "../../../models/genre.model";
 import { switchMap } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-movie-list",
@@ -14,13 +15,16 @@ import { switchMap } from "rxjs";
 export class MovieListComponent {
   private moviesService: MoviesService;
   private genreService: GenreService;
+  private router: Router;
 
   movieList$ = signal<MovieWithGenres[]>([]);
   genreList$ = signal<Genre[]>([]);
+  selectedItem$ = signal<number | undefined>(undefined);
 
   constructor() {
     this.moviesService = inject(MoviesService);
     this.genreService = inject(GenreService);
+    this.router = inject(Router);
 
     this.genreService
       .getAllMovieGenres()
@@ -51,5 +55,10 @@ export class MovieListComponent {
       (genreId) =>
         this.genreList$().find((genre) => genre.id === genreId)?.name ?? "Unknown genre"
     );
+  }
+
+  setSelectedItem(id: number) {
+    this.selectedItem$.update(() => id);
+    this.router.navigate([id]);
   }
 }

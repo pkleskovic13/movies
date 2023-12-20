@@ -13,7 +13,8 @@ const routes: Routes = [
         path: "",
         component: MoviesLayoutComponent,
         children: [
-          { path: "", component: MovieDetailsComponent }
+          { path: "", component: MovieDetailsComponent },
+          { path: ":id", component: MovieDetailsComponent }
         ],
       },
     ],

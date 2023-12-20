@@ -7,6 +7,7 @@
 
 $movies-dark-primary: mat.define-palette(mat.$pink-palette);
 $movies-dark-accent: mat.define-palette(mat.$blue-grey-palette, A200, A100, A400);
+$movies-background: mat.define-palette(mat.$grey-palette);
 
 $movies-warn: mat.define-palette(mat.$red-palette);
 
@@ -17,10 +18,11 @@ $movies-dark-theme: mat.define-dark-theme((
  color: (
   primary: $movies-dark-primary,
   accent: $movies-dark-accent,
-   warn: $movies-warn,
+  warn: $movies-warn,
  ),
   typography: $typography-config,
   density: 0,
 ));
 
 @include mat.all-component-themes($movies-dark-theme);
+@include mat.all-component-typographies($movies-dark-theme);
