@@ -1,3 +1,22 @@
-object: 
-<pre>{{ movie$() | json }}</pre>
-<app-movie-details-header></app-movie-details-header>
+@if (backdropPath$()) {
+<div
+  class="backdrop"
+  [ngStyle]="{
+    'background-image':
+      'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
+      getFullBackdropPath(backdropPath$()) +
+      ')'
+  }"
+></div>
+}
+<div class="layout">
+  <app-movie-details-header
+    [posterPath]="movie$()?.posterPath"
+    [title]="movie$()?.title"
+    [overview]="movie$()?.overview"
+    [releaseYear]="getMovieReleaseYear(movie$()?.releaseDate)"
+    [genres]="movie$()?.genres"
+  >
+  </app-movie-details-header>
+  test
+</div>

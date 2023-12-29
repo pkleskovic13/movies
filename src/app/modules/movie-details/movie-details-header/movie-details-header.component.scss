@@ -1,4 +1,18 @@
-.movie-details-header-layout {
+.layout {
+  display: flex;
+  flex-direction: row;
+  z-index: 1;
+  gap: 2em;
+  align-items: center;
+}
+
+.main-info {
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (max-width: 600px) {
+  .layout {
+    flex-direction: column;
+  }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// In the interest of speed, used ChatGPT-4 for this implementation
+// In the interest of speed, used GPT-4 for this implementation
 @Injectable()
 export class CamelCaseInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

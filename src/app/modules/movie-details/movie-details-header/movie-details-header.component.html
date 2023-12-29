@@ -1,4 +1,12 @@
-is rendered
-<div class="movie-details-header-layout">
-  
+<div class="layout">
+  <app-poster [path]="posterPath" [title]="title"></app-poster>
+  <div class="main-info">
+    <h2 class="mat-headline-2">
+      {{ title }} @if (releaseYear) { ({{ releaseYear }}) }
+    </h2>
+    <p class="mat-body-1">{{ overview }}</p>
+    @if (genres) {
+      <app-genre-list [genreList]="genres"></app-genre-list>
+    }
+  </div>
 </div>

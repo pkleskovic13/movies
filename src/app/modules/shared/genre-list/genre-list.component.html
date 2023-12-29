@@ -1,0 +1,8 @@
+<div class="layout">
+  <div>Genres:</div>
+  <mat-chip-set>
+    @for (genre of genreList; track genre) {
+      <mat-chip highlighted color="primary">{{ genre }}</mat-chip>
+    }
+  </mat-chip-set>
+</div>

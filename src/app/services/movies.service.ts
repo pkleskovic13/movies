@@ -39,7 +39,6 @@ export class MoviesService {
   }
 
   getMovieById(id: number): Observable<Movie | undefined> {
-    console.log(this.moviesSubject$.getValue())
     const movie = this.moviesSubject$.getValue().find((movie) => movie.id === id)
     // if (movie) {
       return of(movie);

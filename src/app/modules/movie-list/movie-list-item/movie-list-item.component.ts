@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Genre } from '../../../models/genre.model';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-movie-list-item',
@@ -11,4 +10,12 @@ export class MovieListItemComponent {
   @Input() title?: string;
   @Input() genres?: string[];
   @Input() isSelected: boolean = false;
+
+  get renderedTitle(): string | undefined {
+    if (this.title?.length && this.title.length > 26) {
+      return this.title.slice(0, 26) + '...';
+    }
+
+    return this.title;
+  }
 }

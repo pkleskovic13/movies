@@ -1,0 +1,9 @@
+<div class="poster-container">
+  @if (path) {
+    <img [src]="getFullPosterPath(path)" class="poster-img" alt="{{ title }} poster" />
+  } @else {
+    <div class="poster-placeholder">
+      <p>No poster available</p>
+    </div>
+  }
+</div>

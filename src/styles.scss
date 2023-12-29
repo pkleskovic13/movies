@@ -3,10 +3,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.show-border {
-  border: 1px solid red;
-}
-
 /* This will affect the scrollbar globally */
 ::-webkit-scrollbar {
   width: 10px;
