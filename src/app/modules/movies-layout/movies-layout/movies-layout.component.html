@@ -1,15 +1,19 @@
-@if (!isMobile$()) { 
+@if (!isMobile$()) {
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened>
-      <app-movie-list></app-movie-list>
+    <mat-sidenav mode="side" opened class="green-outline">
+      <div class="scrollable-container" #scrollable>
+        <app-movie-list></app-movie-list>
+      </div>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
-} @else {
+} @else { 
   @if (isMenuOpen$()) {
-    <app-mobile-menu></app-mobile-menu>
+    <div class="mobile-layout" #scrollable>
+      <app-movie-list class="mat-app-background"></app-movie-list>
+    </div>
   }
   <router-outlet></router-outlet>
 }

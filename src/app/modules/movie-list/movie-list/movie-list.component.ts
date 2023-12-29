@@ -1,12 +1,20 @@
-import { Component, NgZone, inject, signal } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  signal,
+} from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MoviesService } from "../../../services/movies.service";
-import { Movie, MovieWithGenres } from "../../../models/movie.model";
+import { MovieWithGenres } from "../../../models/movie.model";
 import { GenreService } from "../../../services/genre.service";
 import { Genre } from "../../../models/genre.model";
-import { switchMap } from "rxjs";
+import { Observable, switchMap } from "rxjs";
 import { Router } from "@angular/router";
-import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
 
 @Component({
   selector: "app-movie-list",
@@ -14,11 +22,11 @@ import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/scrolling";
   styleUrl: "./movie-list.component.scss",
 })
 export class MovieListComponent {
+  @Input() sidenavScrollEvent?: Observable<Event>;
+
   private moviesService: MoviesService;
   private genreService: GenreService;
   private router: Router;
-  private ngZone: NgZone;
-  private scrollDispatcher: ScrollDispatcher;
 
   movieList$ = signal<MovieWithGenres[]>([]);
   genreList$ = signal<Genre[]>([]);
@@ -28,8 +36,6 @@ export class MovieListComponent {
     this.moviesService = inject(MoviesService);
     this.genreService = inject(GenreService);
     this.router = inject(Router);
-    this.ngZone = inject(NgZone);
-    this.scrollDispatcher = inject(ScrollDispatcher);
 
     this.genreService
       .getAllMovieGenres()
@@ -55,25 +61,7 @@ export class MovieListComponent {
         // just renders the sidenav over the content until the first DOM refresh
         window.dispatchEvent(new Event("resize"));
       });
-
-    this.scrollDispatcher
-      .scrolled()
-      .pipe(takeUntilDestroyed())
-      .subscribe((cdk: CdkScrollable | void) => {
-        if (!cdk) {
-          return;
-        }
-        const elementRef = cdk.getElementRef().nativeElement;
-
-        this.ngZone.run(() => {
-          const scrollPos = elementRef.scrollTop + elementRef.clientHeight;
-          console.log(scrollPos, elementRef.scrollHeight);
-          if (scrollPos === elementRef.scrollHeight) {
-            console.log("trigger api call");
-          }
-        });
-      });
-  }
+    }
 
   setSelectedItem(id: number) {
     this.selectedItem$.update(() => id);
