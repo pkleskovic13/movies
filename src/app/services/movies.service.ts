@@ -92,11 +92,6 @@ export class MoviesService {
             this.options
           );
         })
-      )
-      .pipe(
-        map((movie) => {
-          return movie
-        })
       );
   }
 
