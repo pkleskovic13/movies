@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Movie } from "../../../models/movie.model";
 import { MoviesService } from "../../../services/movies.service";
 import { environment } from "../../../../environments/environment";
+import { ApiError } from "../../../models/api/api-error.model";
 
 @Component({
   selector: "app-movie-details",
@@ -17,6 +18,7 @@ export class MovieDetailsComponent {
   movie$ = signal<Movie | undefined>(undefined);
   backdropPath$ = computed(() => this.movie$()?.backdropPath);
   selectedId$ = signal<number | undefined>(undefined);
+  error$ = signal<ApiError | undefined>(undefined);
 
   constructor() {
     this.route = inject(ActivatedRoute);
@@ -28,11 +30,16 @@ export class MovieDetailsComponent {
       const id = this.selectedId$();
 
       if (id && !isNaN(id)) {
-        this.movieService
-          .getMovieById(id)
-          .subscribe((movie) => {
+        this.movieService.getMovieById(id).subscribe({
+          next: (movie) => {
             this.movie$.update(() => movie);
-          });
+            this.error$.update(() => undefined);
+          },
+          error: (error) => {
+            console.error(this.movieService.mapMovieError(error.status));
+            this.error$.update(() => this.movieService.mapMovieError(error.status));
+          }
+        });
       }
     });
   }

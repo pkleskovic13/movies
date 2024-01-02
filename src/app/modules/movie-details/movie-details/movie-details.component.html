@@ -1,28 +1,29 @@
 @if (selectedId$()) {
+  @if (error$()) {
+    <app-movie-list-empty-state [title]="error$()?.title" [subtitle]="error$()?.subtitle"></app-movie-list-empty-state>
+  } @else {
   @if (backdropPath$()) {
-  <div
-    class="backdrop"
-    [ngStyle]="{
-      'background-image':
-        'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
-        getFullBackdropPath(backdropPath$()) +
-        ')'
-    }"
-  ></div>
+    <div
+      class="backdrop"
+      [ngStyle]="{
+        'background-image':
+          'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
+          getFullBackdropPath(backdropPath$()) +
+          ')'
+      }"
+    ></div>
+    }
+    <div class="layout">
+      <app-movie-details-header
+        [posterPath]="movie$()?.posterPath"
+        [title]="movie$()?.title"
+        [overview]="movie$()?.overview"
+        [releaseYear]="getMovieReleaseYear(movie$()?.releaseDate)"
+        [genres]="movie$()?.genres"
+      >
+      </app-movie-details-header>
+    </div>
   }
-  <div class="layout">
-    <app-movie-details-header
-      [posterPath]="movie$()?.posterPath"
-      [title]="movie$()?.title"
-      [overview]="movie$()?.overview"
-      [releaseYear]="getMovieReleaseYear(movie$()?.releaseDate)"
-      [genres]="movie$()?.genres"
-    >
-    </app-movie-details-header>
-  </div>
 } @else {
-  <div class="empty-state-layout">
-    <h4 class="mat-headline-4">No movie selected!</h4>
-    <p class="mat-body-1">Please select a movie from the list</p>
-  </div>
+  <app-movie-list-empty-state title='No movie selected' subtitle="Please select a movie from the list"></app-movie-list-empty-state>
 }

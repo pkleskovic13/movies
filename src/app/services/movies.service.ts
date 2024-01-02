@@ -3,9 +3,10 @@ import { Injectable, inject, signal } from "@angular/core";
 import { PaginatedResponse } from "../models/api/paginated-response.model";
 import { Movie } from "../models/movie.model";
 import { environment } from "../../environments/environment";
-import { BehaviorSubject, Observable, map, of, switchMap } from "rxjs";
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, throwError } from "rxjs";
 import { GenreService } from "./genre.service";
 import { Genre } from "../models/genre.model";
+import { ApiError } from "../models/api/api-error.model";
 
 @Injectable({
   providedIn: "root",
@@ -23,8 +24,7 @@ export class MoviesService {
     },
   };
 
-  private moviesSubject$: BehaviorSubject<Movie[]> =
-    new BehaviorSubject<Movie[]>([]);
+  private moviesSubject$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
   private moviesPage$ = signal<number>(1);
   genreList$ = signal<Genre[]>([]);
 
@@ -50,6 +50,9 @@ export class MoviesService {
             }/discover/movie?include_adult=false&include_video=false&language=en-US&page=${this.moviesPage$()}&sort_by=popularity.desc`,
             this.options
           );
+        }),
+        catchError(error => {
+          return throwError(() => error)
         })
       )
       .subscribe(({ results }) => {
@@ -91,6 +94,9 @@ export class MoviesService {
             `${environment.movieDatabaseApi.BASE_URL}/movie/${id}`,
             this.options
           );
+        }),
+        catchError(error => {
+          return throwError(() => error)
         })
       );
   }
@@ -106,5 +112,20 @@ export class MoviesService {
           name: "Unknown genre",
         }
     );
+  }
+  
+  mapMovieError(status: number): ApiError {
+    switch (status) {
+      case 404: 
+        return {
+          title: 'Movie not found',
+          subtitle: 'Please try again.'
+        };
+      default: 
+        return {
+          title: 'An unknown error occured!',
+          subtitle: 'We are working hard to resolve the issue!'
+        }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { BehaviorSubject, Observable, map, tap } from "rxjs";
+import { BehaviorSubject, Observable, catchError, map, tap, throwError } from "rxjs";
 import { Genre } from "../models/genre.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
@@ -37,7 +37,10 @@ export class GenreService {
       )
       .pipe(
         map((response) => response.genres),
-        tap((genres: Genre[]) => this.genresSubject$.next(genres))
+        tap((genres: Genre[]) => this.genresSubject$.next(genres)),
+        catchError(error => {
+          return throwError(() => error);
+        })
       );
   }
 }
