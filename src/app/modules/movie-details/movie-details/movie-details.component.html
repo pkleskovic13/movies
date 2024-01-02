@@ -1,21 +1,28 @@
-@if (backdropPath$()) {
-<div
-  class="backdrop"
-  [ngStyle]="{
-    'background-image':
-      'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
-      getFullBackdropPath(backdropPath$()) +
-      ')'
-  }"
-></div>
+@if (selectedId$()) {
+  @if (backdropPath$()) {
+  <div
+    class="backdrop"
+    [ngStyle]="{
+      'background-image':
+        'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(' +
+        getFullBackdropPath(backdropPath$()) +
+        ')'
+    }"
+  ></div>
+  }
+  <div class="layout">
+    <app-movie-details-header
+      [posterPath]="movie$()?.posterPath"
+      [title]="movie$()?.title"
+      [overview]="movie$()?.overview"
+      [releaseYear]="getMovieReleaseYear(movie$()?.releaseDate)"
+      [genres]="movie$()?.genres"
+    >
+    </app-movie-details-header>
+  </div>
+} @else {
+  <div class="empty-state-layout">
+    <h4 class="mat-headline-4">No movie selected!</h4>
+    <p class="mat-body-1">Please select a movie from the list</p>
+  </div>
 }
-<div class="layout">
-  <app-movie-details-header
-    [posterPath]="movie$()?.posterPath"
-    [title]="movie$()?.title"
-    [overview]="movie$()?.overview"
-    [releaseYear]="getMovieReleaseYear(movie$()?.releaseDate)"
-    [genres]="movie$()?.genres"
-  >
-  </app-movie-details-header>
-</div>

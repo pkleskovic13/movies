@@ -4,8 +4,6 @@ import { ActivatedRoute } from "@angular/router";
 import { Movie } from "../../../models/movie.model";
 import { MoviesService } from "../../../services/movies.service";
 import { environment } from "../../../../environments/environment";
-import { GenreService } from "../../../services/genre.service";
-import { filter, map } from "rxjs";
 
 @Component({
   selector: "app-movie-details",
@@ -15,18 +13,19 @@ import { filter, map } from "rxjs";
 export class MovieDetailsComponent {
   private route: ActivatedRoute;
   private movieService: MoviesService;
-  private genreService: GenreService;
 
   movie$ = signal<Movie | undefined>(undefined);
   backdropPath$ = computed(() => this.movie$()?.backdropPath);
+  selectedId$ = signal<number | undefined>(undefined);
 
   constructor() {
     this.route = inject(ActivatedRoute);
     this.movieService = inject(MoviesService);
-    this.genreService = inject(GenreService);
 
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      const id = Number(params.get("id"));
+      this.selectedId$.update(() => Number(params.get("id")));
+
+      const id = this.selectedId$();
 
       if (id && !isNaN(id)) {
         this.movieService
