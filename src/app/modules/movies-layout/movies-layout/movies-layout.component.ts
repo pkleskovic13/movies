@@ -10,7 +10,6 @@ import {
 } from "@angular/core";
 import { BreakpointService } from "../../../services/breakpoint.service";
 import { MenuService } from "../../../services/menu.service";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MoviesService } from "../../../services/movies.service";
 
 @Component({
@@ -52,7 +51,6 @@ export class MoviesLayoutComponent implements AfterViewInit {
   }
 
   addScrollListeners(scrollables: QueryList<ElementRef>) {
-    console.log(scrollables.length);
     scrollables.forEach((scrollable) => {
       scrollable.nativeElement.addEventListener(
         "scroll",
@@ -66,7 +64,6 @@ export class MoviesLayoutComponent implements AfterViewInit {
     const scrollPos = target.scrollTop + target.clientHeight;
 
     if (scrollPos === target.scrollHeight) {
-      console.log("trigger api call");
       this.movieService.getPopularMovies(true);
     }
   }

@@ -2,7 +2,7 @@
   <div>Genres:</div>
   <mat-chip-set>
     @for (genre of genreList; track genre) {
-      <mat-chip highlighted color="primary">{{ genre }}</mat-chip>
+      <mat-chip highlighted color="primary">{{ genre.name }}</mat-chip>
     }
   </mat-chip-set>
 </div>

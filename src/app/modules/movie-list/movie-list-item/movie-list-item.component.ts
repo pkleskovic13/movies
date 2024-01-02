@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Genre } from '../../../models/genre.model';
 
 @Component({
   selector: 'app-movie-list-item',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
 export class MovieListItemComponent {
   @Input() id?: number;
   @Input() title?: string;
-  @Input() genres?: string[];
+  @Input() genres?: Genre[];
   @Input() isSelected: boolean = false;
 
   get renderedTitle(): string | undefined {
@@ -17,5 +18,12 @@ export class MovieListItemComponent {
     }
 
     return this.title;
+  }
+
+  get genreList(): string | undefined {
+    if (this.genres?.length && this.genres.length > 3) {
+      return this.genres?.slice(0, 3).map((genre) => genre.name).join(', ') + `, and ${this.genres.length - 3} more`;
+    }
+    return this.genres?.map((genre) => genre.name).join(', ');
   }
 }

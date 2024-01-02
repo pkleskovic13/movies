@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Genre } from '../../../models/genre.model';
 
 @Component({
   selector: 'app-genre-list',
@@ -6,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './genre-list.component.scss'
 })
 export class GenreListComponent {
-  @Input() genreList?: string[];
+  @Input() genreList?: Genre[];
 }

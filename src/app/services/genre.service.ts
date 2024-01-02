@@ -40,11 +40,4 @@ export class GenreService {
         tap((genres: Genre[]) => this.genresSubject$.next(genres))
       );
   }
-
-  parseGenres(genreIds: number[]): string[] {
-    return genreIds?.map(
-      (genreId) =>
-        this.genresSubject$.getValue().find((genre) => genre.id === genreId)?.name ?? "Unknown genre"
-    );
-  }
 }

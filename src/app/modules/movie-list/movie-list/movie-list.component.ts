@@ -1,20 +1,17 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   Input,
-  OnChanges,
-  SimpleChanges,
   inject,
   signal,
 } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MoviesService } from "../../../services/movies.service";
-import { MovieWithGenres } from "../../../models/movie.model";
-import { GenreService } from "../../../services/genre.service";
 import { Genre } from "../../../models/genre.model";
-import { Observable, switchMap } from "rxjs";
+import { Observable } from "rxjs";
 import { Router } from "@angular/router";
+import { Movie } from "../../../models/movie.model";
+import { BreakpointService } from "../../../services/breakpoint.service";
+import { MenuService } from "../../../services/menu.service";
 
 @Component({
   selector: "app-movie-list",
@@ -25,37 +22,33 @@ export class MovieListComponent {
   @Input() sidenavScrollEvent?: Observable<Event>;
 
   private moviesService: MoviesService;
-  private genreService: GenreService;
+  private breakpointService: BreakpointService;
+  private menuService: MenuService;
   private router: Router;
 
-  movieList$ = signal<MovieWithGenres[]>([]);
+  movieList$ = signal<Movie[]>([]);
   genreList$ = signal<Genre[]>([]);
   selectedItem$ = signal<number | undefined>(undefined);
+  isHandset$ = signal<boolean>(false);
 
   constructor() {
     this.moviesService = inject(MoviesService);
-    this.genreService = inject(GenreService);
+    this.breakpointService = inject(BreakpointService);
+    this.menuService = inject(MenuService);
     this.router = inject(Router);
 
-    this.genreService
-      .getAllMovieGenres()
+    this.breakpointService.isHandset.pipe(
+      takeUntilDestroyed()
+    ).subscribe((isHandset) => {
+      this.isHandset$.update(() => isHandset);
+    })
+
+    this.moviesService.getPopularMovies()
       .pipe(
         takeUntilDestroyed(),
-        switchMap((genreList) => {
-          this.genreList$.update(() => genreList);
-          return this.moviesService.getPopularMovies();
-        })
       )
       .subscribe((movieList) => {
-        const movieWithMappedGenres: MovieWithGenres[] = movieList.map(
-          (movie) => {
-            return {
-              ...movie,
-              genres: this.genreService.parseGenres(movie.genreIds),
-            };
-          }
-        );
-        this.movieList$.update(() => movieWithMappedGenres);
+        this.movieList$.update(() => movieList);
 
         // Workaround for the default MatSidenav behavior with dynamic content: it does not properly push the content to the side and instead
         // just renders the sidenav over the content until the first DOM refresh
@@ -64,6 +57,10 @@ export class MovieListComponent {
     }
 
   setSelectedItem(id: number) {
+    if (this.isHandset$()) {
+      this.menuService.toggleMenu();
+    }
+
     this.selectedItem$.update(() => id);
     this.router.navigate([id]);
   }
