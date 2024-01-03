@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpInterceptorFn } from '@angular/common/http';
-
-import { camelCaseInterceptor } from './camel-case.interceptor';
+import { CamelCaseInterceptor } from './camel-case.interceptor';
 
 describe('camelCaseInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => camelCaseInterceptor(req, next));
+  let interceptor: CamelCaseInterceptor;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [CamelCaseInterceptor]
+    });
+
+    interceptor = TestBed.inject(CamelCaseInterceptor);
   });
 
   it('should be created', () => {

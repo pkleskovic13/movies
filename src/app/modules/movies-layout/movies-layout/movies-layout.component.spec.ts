@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MoviesLayoutComponent } from './movies-layout.component';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 describe('MoviesLayoutComponent', () => {
   let component: MoviesLayoutComponent;
@@ -8,7 +10,9 @@ describe('MoviesLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MoviesLayoutComponent]
+      declarations: [MoviesLayoutComponent],
+      providers: [HttpClient, HttpHandler],
+      imports: [RouterModule]
     })
     .compileComponents();
     

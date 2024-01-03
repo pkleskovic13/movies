@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ActivatedRoute } from "@angular/router";
 import { Movie } from "../../../models/movie.model";

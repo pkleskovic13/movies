@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MovieListItemComponent } from './movie-list-item.component';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('MovieListItemComponent', () => {
   let component: MovieListItemComponent;
@@ -8,7 +9,8 @@ describe('MovieListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MovieListItemComponent]
+      declarations: [MovieListItemComponent],
+      imports: [SharedModule]
     })
     .compileComponents();
     
