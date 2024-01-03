@@ -36,7 +36,6 @@ export class MovieDetailsComponent {
             this.error$.update(() => undefined);
           },
           error: (error) => {
-            console.error(this.movieService.mapMovieError(error.status));
             this.error$.update(() => this.movieService.mapMovieError(error.status));
           }
         });
